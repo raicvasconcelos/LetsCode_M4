@@ -10,5 +10,5 @@ public class Playlist {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private UUID uid;
-    private
+
 }
