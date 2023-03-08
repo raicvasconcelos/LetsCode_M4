@@ -29,7 +29,22 @@ public class LivroController {
 //        System.out.println(aluguel);
 //    }
 
+//    {
+//        "pessoa":{
+//        "name":"Railson",
+//                "cpf":"0123644",
+//                "age": 30,
+//                "livros": 	{
+//            "title": "Eletromagnetismo",
+//                    "author":"Halliday",
+//                    "year": 1998,
+//                    "category":"terror"
+//        }
+//
+//
+//    }
+//    }
 
-
+//    https://www.youtube.com/watch?v=8qhaDBCJh6I
 
 }
