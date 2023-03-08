@@ -47,4 +47,8 @@ public class LivroController {
 
 //    https://www.youtube.com/watch?v=8qhaDBCJh6I
 
+
+//    spring.h2.console.settings.web-allow-others=true
+
+
 }
