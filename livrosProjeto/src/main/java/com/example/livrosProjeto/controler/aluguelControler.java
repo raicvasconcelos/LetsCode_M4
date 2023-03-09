@@ -23,6 +23,7 @@ public class aluguelControler {
     public Pessoa alugaLivro(@RequestBody AluguelRequest aluguel){
         return pessoaRepository.save(aluguel.getPessoa());
     }
+
     @GetMapping("/listaAlugueis")
     public List<Pessoa> listaAlguel(){
         return pessoaRepository.findAll();
