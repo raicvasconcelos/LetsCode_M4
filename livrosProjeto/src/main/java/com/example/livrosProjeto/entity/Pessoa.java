@@ -19,9 +19,9 @@ public class Pessoa {
     private int id;
     private String nome;
     private String cpf;
-    @OneToMany(targetEntity = Livro.class, cascade = CascadeType.ALL)
-    @JoinColumn(name="pessoa_fk", referencedColumnName = "id")
-    private List<Livro> livros;
+//    @OneToMany(targetEntity = Livro.class, cascade = CascadeType.ALL)
+//    @JoinColumn(name="pessoa_fk", referencedColumnName = "id")
+//    private List<Livro> livros;
 
 
 

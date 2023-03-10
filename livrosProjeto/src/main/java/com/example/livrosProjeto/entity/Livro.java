@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,22 +19,13 @@ import java.time.LocalDateTime;
 @Entity
 public class Livro {
     @Id
+    @GeneratedValue
     private int livroId;
     private String titulo;
     private String autor;
     private int ano;
     private Categoria categoria;
-    @Column(columnDefinition = "DATE")
-    private LocalDate dataEntrega;
 
-    public Livro(int livroId, String titulo, String autor, int ano, Categoria categoria) {
-        this.livroId = livroId;
-        this.titulo = titulo;
-        this.autor = autor;
-        this.ano = ano;
-        this.categoria = categoria;
-        this.dataEntrega = LocalDate.now();
-    }
 }
 
 
