@@ -6,9 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -20,5 +19,8 @@ public class Genero {
     @GeneratedValue
     private int id;
     private String generoNome;
+
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private List<Musica> musicas;
 
 }

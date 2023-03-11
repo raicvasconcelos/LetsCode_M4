@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -22,8 +19,10 @@ public class Musica {
     private int id;
     private String musicaNome;
     private String artista;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Genero genero;
+//    @JoinColumn(name = "genero_id", referencedColumnName = "id")
+
 
 
 
