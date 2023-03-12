@@ -13,7 +13,5 @@ public interface GeneroRepository extends JpaRepository<Genero, Integer> {
 //    Genero generoByName (String generoNome);
 
     @Query("SELECT g FROM Genero g WHERE g.generoNome LIKE %:searchTerm%")
-
-
     Genero findBySearchTerm(@Param("searchTerm") String generoNome);
 }
