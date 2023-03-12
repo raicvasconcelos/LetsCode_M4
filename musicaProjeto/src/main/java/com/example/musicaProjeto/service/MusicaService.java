@@ -1,5 +1,6 @@
 package com.example.musicaProjeto.service;
 
+import com.example.musicaProjeto.dto.CriaMusica;
 import com.example.musicaProjeto.entity.Genero;
 import com.example.musicaProjeto.entity.Musica;
 import com.example.musicaProjeto.repository.GeneroRepository;
