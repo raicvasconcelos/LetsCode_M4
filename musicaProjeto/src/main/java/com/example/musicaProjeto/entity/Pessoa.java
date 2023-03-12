@@ -15,11 +15,11 @@ import java.util.List;
 @Entity
 public class Pessoa {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nome;
     private String cpf;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Musica> like;
 
     @OneToMany(cascade = CascadeType.PERSIST)

@@ -47,7 +47,7 @@ public class MusicaController {
 
         musicaRepository.save(musica1);
 
-        return ResponseEntity.ok().body("Musica " + musica1.getMusicaNome()  + " salva no banco de dados");
+        return ResponseEntity.ok().body(musicaRepository.save(musica1));
 
     }
 

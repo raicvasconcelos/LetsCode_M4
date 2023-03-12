@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Entity
 public class Musica {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String musicaNome;
     private String artista;
@@ -24,7 +24,7 @@ public class Musica {
 //    @JoinColumn(name = "genero_id", referencedColumnName = "id")
 //    @OneToOne(cascade = CascadeType.PERSIST)
 //    private Like like;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Pessoa like;
 
 
