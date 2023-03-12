@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 @RestController
-public class playlistController {
+public class LikeController {
+
     @Autowired
     private PessoaRepository pessoaRepository;
     @Autowired
@@ -24,24 +25,24 @@ public class playlistController {
     @Autowired
     private MusicaRepository musicaRepository;
 
-    @PostMapping("/playlist")
-    public ResponseEntity<?> criaPlaylist(@RequestBody CriaPlaylist playlist){
-        boolean pessoaExists = pessoaRepository.existsByName(playlist.getPessoa().getNome());
+    @PostMapping("/like")
+    public ResponseEntity<?> criaFavoritos(@RequestBody CriaPlaylist playlistFavoritos){
+        boolean pessoaExists = pessoaRepository.existsByName(playlistFavoritos.getPessoa().getNome());
         if(!pessoaExists){
             return ResponseEntity.badRequest().body("Pessoa não encontrado");
         }
-        Playlist playlist1 = new Playlist();
+        Playlist favoritos = new Playlist();
 
-        playlist1.setPlaylistNome(playlist.getPlaylistNome());
-        playlist1.setPessoa(playlist.getPessoa());
+        favoritos.setPlaylistNome("Favoritos");
+        favoritos.setPessoa(playlistFavoritos.getPessoa());
 
         List<Musica> musica = new ArrayList<>();
-        playlist1.setMusicas(musica);
+        favoritos.setMusicas((musica));
 
 
-        playlistRepository.save(playlist1);
+        playlistRepository.save(favoritos);
 
-        return ResponseEntity.ok().body("Playlist "  + playlist1.getPlaylistNome() + " criada");
+        return ResponseEntity.ok().body("Playlist Favoritos criada");
 
 
 

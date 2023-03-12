@@ -1,21 +1,17 @@
 package com.example.musicaProjeto.controller;
 
-import com.example.musicaProjeto.dto.CriaMusica;
 import com.example.musicaProjeto.entity.Genero;
 import com.example.musicaProjeto.entity.Musica;
 import com.example.musicaProjeto.repository.GeneroRepository;
 import com.example.musicaProjeto.repository.MusicaRepository;
 import com.example.musicaProjeto.service.MusicaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.lang.annotation.Repeatable;
 import java.util.List;
 
 @RestController

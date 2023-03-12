@@ -22,7 +22,7 @@ public class Playlist {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Pessoa pessoa;
     @ManyToMany(cascade = CascadeType.PERSIST)
-    private List<Musica> musica;
+    private List<Musica> musicas;
 
 
 

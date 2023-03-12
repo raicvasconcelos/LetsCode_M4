@@ -16,6 +16,8 @@ public class PessoaController {
 
     @PostMapping("/pessoa")
     public Pessoa criaPessoa(@RequestBody CriaPessoa pessoa){
+
+
         return pessoaRepository.save(pessoa.getPessoa());
     }
 }

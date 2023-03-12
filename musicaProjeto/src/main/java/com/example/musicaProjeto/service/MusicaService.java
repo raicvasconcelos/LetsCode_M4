@@ -1,7 +1,5 @@
 package com.example.musicaProjeto.service;
 
-import com.example.musicaProjeto.controller.MusicaController;
-import com.example.musicaProjeto.dto.CriaMusica;
 import com.example.musicaProjeto.entity.Genero;
 import com.example.musicaProjeto.entity.Musica;
 import com.example.musicaProjeto.repository.GeneroRepository;
@@ -9,9 +7,6 @@ import com.example.musicaProjeto.repository.MusicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 @Service
 public class MusicaService {
