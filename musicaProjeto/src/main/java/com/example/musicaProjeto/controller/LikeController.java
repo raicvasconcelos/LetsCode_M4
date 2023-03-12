@@ -42,8 +42,22 @@ public ResponseEntity adicionaLike(@RequestBody LikeDTO favorito) throws ChangeS
     } catch (Exception e) {
         return ResponseEntity.badRequest().body("Error: " + e.getMessage());
     }
-
-
-
 }
+
+    @PutMapping("/{pessoaID}/{musicaID}")
+    public ResponseEntity updateMyEntity(@PathVariable Integer pessoaID, @PathVariable Integer musicaID) {
+
+        Optional<Pessoa> pessoaFindID = pessoaRepository.findById(pessoaID);
+        Optional<Musica> musicaFindID = musicaRepository.findById(musicaID);
+
+        try{
+            Musica musicaEncontrada = musicaFindID.orElseThrow(() -> new Exception("Musica não encontrada"));
+            Pessoa pessoaEncontrada = pessoaFindID.orElseThrow(() -> new Exception("Pessoa não encontrada"));
+            pessoaEncontrada.getLike().add(musicaEncontrada);
+            return ResponseEntity.ok().body(pessoaRepository.save(pessoaEncontrada));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+
+    }
 }
