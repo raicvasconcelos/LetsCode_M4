@@ -9,15 +9,14 @@ import com.example.musicaProjeto.repository.PessoaRepository;
 import com.example.musicaProjeto.repository.PlaylistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/playlist")
 public class playlistController {
     @Autowired
     private PessoaRepository pessoaRepository;
@@ -27,7 +26,7 @@ public class playlistController {
     @Autowired
     private MusicaRepository musicaRepository;
 
-    @PostMapping("/playlist")
+    @PostMapping
     public ResponseEntity<?> criaPlaylist(@RequestBody CriaPlaylist playlist){
 
         Optional<Pessoa> pessoaFindID = pessoaRepository.findById(playlist.getPessoaID());
@@ -49,8 +48,26 @@ public class playlistController {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
 
-//        return ResponseEntity.ok().body(playlistRepository.save(playlist1));
+//
 
 
     }
-}
+    @PutMapping
+    public ResponseEntity adicionaMusicaPlaylist(@RequestBody CriaPlaylist addMusica){
+        Optional<Pessoa> pessoaFindID = pessoaRepository.findById(addMusica.getPessoaID());
+        Optional<Musica> musicaFindID = musicaRepository.findById(addMusica.getMusicaID());
+        Optional<Playlist> playlistFind = playlistRepository.findByName(addMusica.getPlaylistNome());
+
+        try{
+            Musica musicaEncontrada = musicaFindID.orElseThrow(() -> new Exception("Musica não encontrada"));
+            Pessoa pessoaEncontrada = pessoaFindID.orElseThrow(() -> new Exception("Pessoa não encontrada"));
+            Playlist playlistEncontrada = playlistFind.orElseThrow(() -> new Exception("Playlist não encontrada"));
+            playlistEncontrada.getMusicas().add(musicaEncontrada);
+            return ResponseEntity.ok().body(playlistRepository.save(playlistEncontrada));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+
+    }
+    }
+
