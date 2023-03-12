@@ -14,6 +14,6 @@ import lombok.ToString;
 public class CriaPlaylist {
 
     private String playlistNome;
-    private Pessoa pessoa;
-    private Musica musica;
+    private int pessoaID;
+    private int MusicaID;
 }

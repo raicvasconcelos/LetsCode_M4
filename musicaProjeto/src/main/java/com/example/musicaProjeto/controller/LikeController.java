@@ -28,21 +28,21 @@ public class LikeController {
     @Autowired
     private MusicaRepository musicaRepository;
 
-@PutMapping
-public ResponseEntity adicionaLike(@RequestBody LikeDTO favorito) throws ChangeSetPersister.NotFoundException {
-
-    Optional<Pessoa> pessoaFindID = pessoaRepository.findById(favorito.getPessoaID());
-    Optional<Musica> musicaFindID = musicaRepository.findById(favorito.getMusicaID());
-
-    try{
-        Musica musicaEncontrada = musicaFindID.orElseThrow(() -> new Exception("Musica não encontrada"));
-        Pessoa pessoaEncontrada = pessoaFindID.orElseThrow(() -> new Exception("Pessoa não encontrada"));
-        pessoaEncontrada.getLike().add(musicaEncontrada);
-        return ResponseEntity.ok().body(pessoaRepository.save(pessoaEncontrada));
-    } catch (Exception e) {
-        return ResponseEntity.badRequest().body("Error: " + e.getMessage());
-    }
-}
+//@PutMapping
+//public ResponseEntity adicionaLike(@RequestBody LikeDTO favorito) throws ChangeSetPersister.NotFoundException {
+//
+//    Optional<Pessoa> pessoaFindID = pessoaRepository.findById(favorito.getPessoaID());
+//    Optional<Musica> musicaFindID = musicaRepository.findById(favorito.getMusicaID());
+//
+//    try{
+//        Musica musicaEncontrada = musicaFindID.orElseThrow(() -> new Exception("Musica não encontrada"));
+//        Pessoa pessoaEncontrada = pessoaFindID.orElseThrow(() -> new Exception("Pessoa não encontrada"));
+//        pessoaEncontrada.getLike().add(musicaEncontrada);
+//        return ResponseEntity.ok().body(pessoaRepository.save(pessoaEncontrada));
+//    } catch (Exception e) {
+//        return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+//    }
+//}
 
     @PutMapping("/{pessoaID}/{musicaID}")
     public ResponseEntity updateMyEntity(@PathVariable Integer pessoaID, @PathVariable Integer musicaID) {
