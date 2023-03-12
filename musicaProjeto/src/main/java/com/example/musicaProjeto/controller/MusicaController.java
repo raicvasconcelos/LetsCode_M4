@@ -9,16 +9,19 @@ import com.example.musicaProjeto.service.MusicaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.annotation.Repeatable;
+import java.util.List;
 
 @RestController
 public class MusicaController {
 
-    MusicaService service;
+    MusicaService musicaService = new MusicaService();
     @Autowired
     private MusicaRepository musicaRepository;
 
@@ -35,21 +38,31 @@ public class MusicaController {
         boolean generoExits = generoRepository.existsByName(musica.getGenero().getGeneroNome());
 
         if(!generoExits){
-            return ResponseEntity.badRequest().body("Genero not found");
+            return ResponseEntity.badRequest().body("Gênero não encontrado");
         }
         Musica musica1 = new Musica();
 
-        Genero genero = generoRepository.findBySearchTerm(musica.getGenero().getGeneroNome());
-//
         musica1.setMusicaNome(musica.getMusica().getMusicaNome());
         musica1.setArtista(musica.getMusica().getArtista());
+
+        Genero genero = generoRepository.findBySearchTerm(musica.getGenero().getGeneroNome());
         musica1.setGenero(genero);
 
         musicaRepository.save(musica1);
 
-        return ResponseEntity.ok(musica1);
+        return ResponseEntity.ok().body("Musica " + musica1.getMusicaNome()  + " salva no banco de dados");
 
-//        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
     }
+
+    @GetMapping("/musicas")
+    public List<Musica> listaMusica(){
+        return musicaRepository.findAll();
+    }
+//
+//    @PostMapping("/musica")
+//    public ResponseEntity criaMusica(@RequestBody CriaMusica musica){
+//        return musicaService.postMusica(musica);
+//
+//    }
 
 }
