@@ -6,6 +6,7 @@ import com.example.musicaProjeto.entity.Musica;
 import com.example.musicaProjeto.repository.GeneroRepository;
 import com.example.musicaProjeto.repository.MusicaRepository;
 import com.example.musicaProjeto.service.MusicaService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ public class MusicaController {
     @Autowired
     private GeneroRepository generoRepository;
 
-
+    @Operation(summary = "Adiciona uma nova música")
     @PostMapping("/musica")
     public ResponseEntity<?> criaMusica(@RequestBody CriaMusica musica){
 

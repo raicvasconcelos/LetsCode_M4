@@ -8,6 +8,8 @@ import com.example.musicaProjeto.entity.Playlist;
 import com.example.musicaProjeto.repository.MusicaRepository;
 import com.example.musicaProjeto.repository.PessoaRepository;
 import com.example.musicaProjeto.repository.PlaylistRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import lombok.AllArgsConstructor;
 import net.bytebuddy.implementation.bytecode.Throw;
 import org.hibernate.collection.internal.PersistentSortedMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@AllArgsConstructor
 @RestController
 @RequestMapping("/like")
 public class LikeController {
@@ -43,7 +45,7 @@ public class LikeController {
 //        return ResponseEntity.badRequest().body("Error: " + e.getMessage());
 //    }
 //}
-
+    @Operation(summary = "Adiciona um nova música as favoritas de uma pessoa")
     @PutMapping("/{pessoaID}/{musicaID}")
     public ResponseEntity updateMyEntity(@PathVariable Integer pessoaID, @PathVariable Integer musicaID) {
 

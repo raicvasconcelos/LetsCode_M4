@@ -14,4 +14,5 @@ public interface GeneroRepository extends JpaRepository<Genero, Integer> {
 
     @Query("SELECT g FROM Genero g WHERE LOWER(g.generoNome) = LOWER(:searchTerm)")
     Optional<Genero> findBySearchTerm(@Param("searchTerm") String generoNome);
+
 }

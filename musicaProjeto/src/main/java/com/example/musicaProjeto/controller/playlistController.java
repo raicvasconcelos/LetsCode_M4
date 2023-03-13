@@ -7,6 +7,8 @@ import com.example.musicaProjeto.entity.Playlist;
 import com.example.musicaProjeto.repository.MusicaRepository;
 import com.example.musicaProjeto.repository.PessoaRepository;
 import com.example.musicaProjeto.repository.PlaylistRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@AllArgsConstructor
 @RestController
 @RequestMapping("/playlist")
 public class playlistController {
@@ -26,6 +28,7 @@ public class playlistController {
     @Autowired
     private MusicaRepository musicaRepository;
 
+    @Operation(summary = "Cria uma playlist nova")
     @PostMapping
     public ResponseEntity<?> criaPlaylist(@RequestBody CriaPlaylist playlist){
 
@@ -52,6 +55,7 @@ public class playlistController {
 
 
     }
+    @Operation(summary = "Adiciona uma nova música à playlist")
     @PutMapping
     public ResponseEntity adicionaMusicaPlaylist(@RequestBody CriaPlaylist addMusica){
         Optional<Pessoa> pessoaFindID = pessoaRepository.findById(addMusica.getPessoaID());
