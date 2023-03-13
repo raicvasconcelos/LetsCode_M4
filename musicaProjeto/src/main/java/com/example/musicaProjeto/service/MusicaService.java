@@ -17,24 +17,24 @@ public class MusicaService {
     @Autowired
     private GeneroRepository generoRepository;
 
-    public ResponseEntity<?> postMusica(CriaMusica musica){
-        boolean generoExits = generoRepository.existsByName(musica.getGenero().getGeneroNome());
-
-        if(!generoExits){
-            return ResponseEntity.badRequest().body("Genero not found");
-        }
-        Musica musica1 = new Musica();
-
-        Genero genero = generoRepository.findBySearchTerm(musica.getGenero().getGeneroNome());
+//    public ResponseEntity<?> postMusica(CriaMusica musica){
+//        boolean generoExits = generoRepository.existsByName(musica.getGenero().getGeneroNome());
 //
-        musica1.setMusicaNome(musica.getMusica().getMusicaNome());
-        musica1.setArtista(musica.getMusica().getArtista());
-        musica1.setGenero(genero);
-
-        musicaRepository.save(musica1);
-
-        return ResponseEntity.ok(musica1);
-
-    }
+//        if(!generoExits){
+//            return ResponseEntity.badRequest().body("Genero not found");
+//        }
+//        Musica musica1 = new Musica();
+//
+//        Genero genero = generoRepository.findBySearchTerm(musica.getGenero().getGeneroNome());
+////
+//        musica1.setMusicaNome(musica.getMusica().getMusicaNome());
+//        musica1.setArtista(musica.getMusica().getArtista());
+//        musica1.setGenero(genero);
+//
+//        musicaRepository.save(musica1);
+//
+//        return ResponseEntity.ok(musica1);
+//
+//    }
 
 }

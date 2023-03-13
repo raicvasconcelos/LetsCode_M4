@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class MusicaController {
@@ -25,29 +26,39 @@ public class MusicaController {
     @Autowired
     private GeneroRepository generoRepository;
 
-//    @PostMapping("/Musica")
-//    public ResponseEntity<Musica> criaMusica(@RequestBody CriaMusica musica){
-//        return ResponseEntity.status(HttpStatus.OK).body(musicaRepository.save(musica.getMusica()));
-//    }
 
     @PostMapping("/musica")
     public ResponseEntity<?> criaMusica(@RequestBody CriaMusica musica){
-        boolean generoExits = generoRepository.existsByName(musica.getGenero().getGeneroNome());
 
-        if(!generoExits){
-            return ResponseEntity.badRequest().body("Gênero não encontrado");
+        Optional<Genero> genero = generoRepository.findBySearchTerm(musica.getGenero().getGeneroNome());
+
+        try{
+            Genero generoEncontrado = genero.orElseThrow(() -> new Exception("Gênero não encontrado"));
+            generoEncontrado.getMusicas().add(musica.getMusica());
+            return ResponseEntity.ok().body(musicaRepository.save(musica.getMusica()));
+
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
-        Musica musica1 = new Musica();
-
-        musica1.setMusicaNome(musica.getMusica().getMusicaNome());
-        musica1.setArtista(musica.getMusica().getArtista());
-
-        Genero genero = generoRepository.findBySearchTerm(musica.getGenero().getGeneroNome());
-        musica1.setGenero(genero);
-
-        musicaRepository.save(musica1);
-
-        return ResponseEntity.ok().body(musicaRepository.save(musica1));
+//        Musica musica1 = new Musica();
+//
+//        musica1.setMusicaNome(musica.getMusica().getMusicaNome());
+//        musica1.setArtista(musica.getMusica().getArtista());
+//
+//        Optional<Genero> genero = generoRepository.findBySearchTerm(musica.getGenero().getGeneroNome());
+//        try{
+//            Genero generoEncontrado = genero.orElseThrow(() -> new Exception("Gênero não encontrado"));
+//            musica1.setGenero(generoEncontrado);
+//            generoEncontrado.getMusicas().add(musica1);
+//        }catch (Exception e) {
+//            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+//        }
+//
+//
+//
+//        musicaRepository.save(musica1);
+//
+//        return ResponseEntity.ok().body(musicaRepository.save(musica1));
 
     }
 
