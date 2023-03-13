@@ -5,25 +5,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Entity
+
 public class Livro {
-    @Id
-    @GeneratedValue
-    private int livroId;
+
     private String titulo;
     private String autor;
     private int ano;
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Categoria categoria;
 
 }

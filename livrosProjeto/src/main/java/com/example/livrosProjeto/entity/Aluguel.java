@@ -1,6 +1,6 @@
 package com.example.livrosProjeto.entity;
 
-import com.example.livrosProjeto.repository.LivroRepository;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,11 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Entity
 public class Aluguel {
-    @Id
-    @GeneratedValue
-    private int id;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Pessoa pessoa;
     @ManyToMany(cascade = CascadeType.PERSIST)

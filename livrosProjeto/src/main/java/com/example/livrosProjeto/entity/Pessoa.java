@@ -12,11 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Entity
 public class Pessoa {
-    @Id
-    @GeneratedValue
-    private int id;
+
     private String nome;
     private String cpf;
 //    @OneToMany(targetEntity = Livro.class, cascade = CascadeType.ALL)
