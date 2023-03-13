@@ -72,6 +72,47 @@ public class playlistController {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
 
+
+
     }
+
+
+    @Operation(summary = "Remove uma playlist")
+    @DeleteMapping("/{pessoaID}/{playlistNome}")
+    public ResponseEntity deletePlaylist(@PathVariable Integer pessoaID, @PathVariable String playlistNome) {
+        Optional<Pessoa> pessoaFindID = pessoaRepository.findById(pessoaID);
+        Optional<Playlist> playlistFind = playlistRepository.findByName(playlistNome);
+
+        try {
+            Pessoa pessoaEncontrada = pessoaFindID.orElseThrow(() -> new Exception("Pessoa não encontrada"));
+            Playlist playlistEncontrada = playlistFind.orElseThrow(() -> new Exception("Playlist não encontrada"));
+            pessoaEncontrada.getPlaylists().remove(playlistEncontrada);
+            return ResponseEntity.ok().body(pessoaEncontrada.getPlaylists());
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+
     }
+    @Operation(summary = "Remove uma musica de uma playlist")
+    @DeleteMapping("/deletaMusicaPlaylist")
+    public ResponseEntity deleteMusicaPlaylist(@RequestBody CriaPlaylist deletaMusicaPlaylist) {
+        Optional<Pessoa> pessoaFindID = pessoaRepository.findById(deletaMusicaPlaylist.getPessoaID());
+        Optional<Musica> musicaFindID = musicaRepository.findById(deletaMusicaPlaylist.getMusicaID());
+        Optional<Playlist> playlistFind = playlistRepository.findByName(deletaMusicaPlaylist.getPlaylistNome());
+
+        try {
+            Musica musicaEncontrada = musicaFindID.orElseThrow(() -> new Exception("Musica não encontrada"));
+            Pessoa pessoaEncontrada = pessoaFindID.orElseThrow(() -> new Exception("Pessoa não encontrada"));
+            Playlist playlistEncontrada = playlistFind.orElseThrow(() -> new Exception("Playlist não encontrada"));
+
+            playlistEncontrada.getMusicas().remove(musicaEncontrada);
+            return ResponseEntity.ok().body(playlistRepository.save(playlistEncontrada));
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+
+    }
+
+
+}
 
