@@ -1,8 +1,10 @@
 package com.example.livrosProjeto.controler;
 
+import ch.qos.logback.classic.util.LevelToSyslogSeverity;
 import com.example.livrosProjeto.dto.LivroDTO;
 import com.example.livrosProjeto.entity.Categoria;
 import com.example.livrosProjeto.entity.Livro;
+import com.example.livrosProjeto.entity.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/livro")
@@ -22,19 +26,19 @@ public class LivroController {
     @Autowired
     private List<Categoria> categorias = Collections.synchronizedList(new ArrayList<>());
 
+    @Autowired
+    private List<Pessoa> pessoas = Collections.synchronizedList(new ArrayList<>());
+
     @PostMapping
     public ResponseEntity criaLivro(@RequestBody LivroDTO novolivro) throws Exception {
 
-//        Optional<Categoria> categoria = categorias.stream()
-//                .filter(value -> value.equals(novolivro.getLivro().getTitulo()))
-//                .findFirst();
 
-        Optional<Categoria> categoriaFind = Optional.ofNullable(categorias.stream().filter(c -> c.getCategoriaNome()
-                        .equalsIgnoreCase(novolivro.getLivro().getCategoria().getCategoriaNome()))
-                .findFirst().orElseThrow(() -> new Exception("Categoria não encontrada")));
+        Optional<Categoria> categoriaFind = categorias.stream().filter(c -> c.getCategoriaNome()
+                        .equalsIgnoreCase(novolivro.getLivro().getCategoria().getCategoriaNome())).findFirst();
 
         try{
-            Categoria categoriaEncontrado = categoriaFind.orElseThrow(() -> new Exception("Categoria não encontrada"));
+            Categoria categoriaEncontrado = categoriaFind.orElseThrow(() -> new Exception(
+                    "Categoria " + novolivro.getLivro().getCategoria().getCategoriaNome()+ " não encontrada"));
 
             Livro livro =new Livro();
             livro.setTitulo(novolivro.getLivro().getTitulo());
@@ -46,14 +50,30 @@ public class LivroController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
+    }
 
+    @GetMapping("/{categoriaNome}")
+    public ResponseEntity listaLivrosCategoria(@PathVariable String categoriaNome)throws Exception{
 
-//        }
-//            return ResponseEntity.badRequest().body("categoria não encontrada");
+        Optional<Categoria> categoriaFind = categorias.stream().filter(c -> c.getCategoriaNome()
+                .equalsIgnoreCase(categoriaNome)).findFirst();
 
+        try{
+            Categoria categoriaEncontrado = categoriaFind.orElseThrow(() -> new Exception(
+                    "Categoria " + categoriaNome + " não encontrada"));
 
+            List<Livro> livroFind = livros.stream().filter(l -> l.getCategoria().getCategoriaNome()
+                    .equalsIgnoreCase(categoriaNome)).collect(Collectors.toList());
+            return ResponseEntity.ok(livroFind);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
 
     }
+
+
+
+
     @GetMapping
     public List<Livro> listaLivros(){
         return livros;

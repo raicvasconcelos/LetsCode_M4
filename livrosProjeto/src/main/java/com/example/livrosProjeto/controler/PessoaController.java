@@ -26,6 +26,7 @@ public class PessoaController {
         pessoas.add(pessoa);
         return ResponseEntity.ok().body(pessoa);
     }
+
     @GetMapping
     public List<Pessoa> listapessoas(){
         return pessoas;
