@@ -1,14 +1,19 @@
 package com.example.musicaProjeto.repository;
 
+import com.example.musicaProjeto.entity.Musica;
 import com.example.musicaProjeto.entity.Playlist;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PlaylistRepository extends JpaRepository<Playlist, Integer> {
 
-    @Query("SELECT pl FROM Playlist pl WHERE pl.playlistNome LIKE %:searchTerm%")
+    @Query("SELECT pl FROM Playlist pl WHERE pl.playlistNome = :searchTerm")
     Optional<Playlist> findByName(@Param("searchTerm") String playlistNome);
+
+    @Query("SELECT pl FROM Playlist pl WHERE pl.pessoa.nome = :pessoaNome")
+    List<Playlist> findAllByPessoaNome(@Param("pessoaNome") String pessoaNome);
 }

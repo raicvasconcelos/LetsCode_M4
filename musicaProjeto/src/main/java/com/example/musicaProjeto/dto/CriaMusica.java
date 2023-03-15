@@ -15,5 +15,5 @@ public class CriaMusica {
 
     private Musica musica;
 
-    private Genero genero;
+    private String generoNome;
 }

@@ -30,21 +30,6 @@ public class LikeController {
     @Autowired
     private MusicaRepository musicaRepository;
 
-//@PutMapping
-//public ResponseEntity adicionaLike(@RequestBody LikeDTO favorito) throws ChangeSetPersister.NotFoundException {
-//
-//    Optional<Pessoa> pessoaFindID = pessoaRepository.findById(favorito.getPessoaID());
-//    Optional<Musica> musicaFindID = musicaRepository.findById(favorito.getMusicaID());
-//
-//    try{
-//        Musica musicaEncontrada = musicaFindID.orElseThrow(() -> new Exception("Musica não encontrada"));
-//        Pessoa pessoaEncontrada = pessoaFindID.orElseThrow(() -> new Exception("Pessoa não encontrada"));
-//        pessoaEncontrada.getLike().add(musicaEncontrada);
-//        return ResponseEntity.ok().body(pessoaRepository.save(pessoaEncontrada));
-//    } catch (Exception e) {
-//        return ResponseEntity.badRequest().body("Error: " + e.getMessage());
-//    }
-//}
     @Operation(summary = "Adiciona um nova música as favoritas de uma pessoa")
     @PutMapping("/{pessoaID}/{musicaID}")
     public ResponseEntity updateMyEntity(@PathVariable Integer pessoaID, @PathVariable Integer musicaID) {
@@ -57,6 +42,25 @@ public class LikeController {
             Pessoa pessoaEncontrada = pessoaFindID.orElseThrow(() -> new Exception("Pessoa não encontrada"));
             pessoaEncontrada.getLike().add(musicaEncontrada);
             return ResponseEntity.ok().body(pessoaRepository.save(pessoaEncontrada));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+
+    }
+
+    @Operation(summary = "Remove uma musica das favoritas de uma pessoa")
+    @DeleteMapping("/{pessoaID}/{musicaID}")
+    public ResponseEntity removeLike(@PathVariable Integer pessoaID, @PathVariable Integer musicaID) {
+
+        Optional<Pessoa> pessoaFindID = pessoaRepository.findById(pessoaID);
+        Optional<Musica> musicaFindID = musicaRepository.findById(musicaID);
+
+        try{
+            Musica musicaEncontrada = musicaFindID.orElseThrow(() -> new Exception("Musica não encontrada"));
+            Pessoa pessoaEncontrada = pessoaFindID.orElseThrow(() -> new Exception("Pessoa não encontrada"));
+            pessoaEncontrada.getLike().remove(musicaEncontrada);
+                        pessoaRepository.save(pessoaEncontrada);
+             return ResponseEntity.ok(pessoaRepository.findById(pessoaID));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }

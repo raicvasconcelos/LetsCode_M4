@@ -29,7 +29,7 @@ public class GeneroController {
         if(!generoRepository.existsByName(genero.getGenero().getGeneroNome())){
             return ResponseEntity.status(HttpStatus.OK).body(generoRepository.save(genero.getGenero()));
         }else {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, String.format("Gênero não cadastrado"));
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, String.format("Gênero já cadastrado"));
         }
     }
     @Operation(summary = "Lista todos os gêneros.")
@@ -38,21 +38,21 @@ public class GeneroController {
         return generoRepository.findAll();
     }
 
-    @Operation(summary = "Lista todas das musicas do mesmo gênero.")
-    @GetMapping({"/{generoNome}"})
-    public ResponseEntity getGeneroByName(@PathVariable String generoNome){
-
-        Optional<Genero> generoFind = generoRepository.findBySearchTerm(generoNome);
-
-        try{
-            Genero generoEncontrado = generoFind.orElseThrow(() -> new Exception("Gênero não encontrado"));
-            return ResponseEntity.ok().body(generoEncontrado.getMusicas());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
-        }
-
-
-    }
+//    @Operation(summary = "Lista todas das musicas do mesmo gênero.")
+//    @GetMapping({"/{generoNome}"})
+//    public ResponseEntity getGeneroByName(@PathVariable String generoNome){
+//
+//        Optional<Genero> generoFind = generoRepository.findBySearchTerm(generoNome);
+//
+//        try{
+//            Genero generoEncontrado = generoFind.orElseThrow(() -> new Exception("Gênero não encontrado"));
+//            return ResponseEntity.ok().body(generoEncontrado.getMusicas());
+//        } catch (Exception e) {
+//            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+//        }
+//
+//
+//    }
 
 
 }

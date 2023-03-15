@@ -9,15 +9,14 @@ import com.example.musicaProjeto.service.MusicaService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/musica")
 public class MusicaController {
 
     MusicaService musicaService = new MusicaService();
@@ -28,42 +27,44 @@ public class MusicaController {
     private GeneroRepository generoRepository;
 
     @Operation(summary = "Adiciona uma nova música")
-    @PostMapping("/musica")
-    public ResponseEntity<?> criaMusica(@RequestBody CriaMusica musica){
+    @PostMapping
+    public ResponseEntity criaMusica(@RequestBody CriaMusica novaMusica){
 
-        Optional<Genero> genero = generoRepository.findBySearchTerm(musica.getGenero().getGeneroNome());
+        Optional<Genero> genero = generoRepository.findBySearchTerm(novaMusica.getGeneroNome());
 
         try{
             Genero generoEncontrado = genero.orElseThrow(() -> new Exception("Gênero não encontrado"));
-            generoEncontrado.getMusicas().add(musica.getMusica());
-            return ResponseEntity.ok().body(musicaRepository.save(musica.getMusica()));
+            Musica musica = new Musica();
+            musica.setMusicaNome(novaMusica.getMusica().getMusicaNome());
+            musica.setArtista(novaMusica.getMusica().getArtista());
+            musica.setGenero(generoEncontrado);
+            return ResponseEntity.ok(musicaRepository.save(musica));
 
         }catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
-//        Musica musica1 = new Musica();
-//
-//        musica1.setMusicaNome(musica.getMusica().getMusicaNome());
-//        musica1.setArtista(musica.getMusica().getArtista());
-//
-//        Optional<Genero> genero = generoRepository.findBySearchTerm(musica.getGenero().getGeneroNome());
-//        try{
-//            Genero generoEncontrado = genero.orElseThrow(() -> new Exception("Gênero não encontrado"));
-//            musica1.setGenero(generoEncontrado);
-//            generoEncontrado.getMusicas().add(musica1);
-//        }catch (Exception e) {
-//            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
-//        }
-//
-//
-//
-//        musicaRepository.save(musica1);
-//
-//        return ResponseEntity.ok().body(musicaRepository.save(musica1));
+
 
     }
 
-    @GetMapping("/musicas")
+    @Operation(summary = "Retorna todos as musica do mesmo gênero")
+    @GetMapping("/{generoNome}")
+    public ResponseEntity listaMusicaGenero(@PathVariable String generoNome)throws Exception{
+
+        Optional<Genero> generoFind = generoRepository.findBySearchTerm(generoNome);
+        System.out.println(generoNome);
+        try{
+            Genero generoEncontrado = generoFind.orElseThrow(() -> new Exception("Gênero não encontrado"));
+            List<Musica> listaMusicasEncontradas = musicaRepository.findAllByGeneroNome(generoNome);
+
+            return ResponseEntity.ok().body(listaMusicasEncontradas);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        }
+    }
+
+
+    @GetMapping
     public List<Musica> listaMusica(){
         return musicaRepository.findAll();
     }
