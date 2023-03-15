@@ -1,7 +1,6 @@
 package com.example.musicaProjeto.dto;
 
 import com.example.musicaProjeto.entity.Musica;
-import com.example.musicaProjeto.entity.Pessoa;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,9 +10,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CriaPlaylist {
+public class MusicaDTO {
 
-    private String playlistNome;
-    private int pessoaID;
-    private int MusicaID;
+    private Musica musica;
+
+    private String generoNome;
 }

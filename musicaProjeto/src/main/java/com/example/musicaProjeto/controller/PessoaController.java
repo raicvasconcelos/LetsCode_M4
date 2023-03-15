@@ -1,7 +1,6 @@
 package com.example.musicaProjeto.controller;
 
-import com.example.musicaProjeto.dto.CriaPessoa;
-import com.example.musicaProjeto.entity.Musica;
+import com.example.musicaProjeto.dto.PessoaDTO;
 import com.example.musicaProjeto.entity.Pessoa;
 import com.example.musicaProjeto.repository.PessoaRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,7 +20,7 @@ public class PessoaController {
     private PessoaRepository pessoaRepository;
     @Operation(summary = "Adiciona uma nova pessoa")
     @PostMapping
-    public Pessoa criaPessoa(@RequestBody CriaPessoa pessoa){
+    public Pessoa criaPessoa(@RequestBody PessoaDTO pessoa){
 
         return pessoaRepository.save(pessoa.getPessoa());
     }

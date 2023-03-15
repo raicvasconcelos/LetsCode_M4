@@ -1,6 +1,6 @@
 package com.example.musicaProjeto.controller;
 
-import com.example.musicaProjeto.dto.CriaMusica;
+import com.example.musicaProjeto.dto.MusicaDTO;
 import com.example.musicaProjeto.entity.Genero;
 import com.example.musicaProjeto.entity.Musica;
 import com.example.musicaProjeto.repository.GeneroRepository;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +27,7 @@ public class MusicaController {
 
     @Operation(summary = "Adiciona uma nova música")
     @PostMapping
-    public ResponseEntity criaMusica(@RequestBody CriaMusica novaMusica){
+    public ResponseEntity criaMusica(@RequestBody MusicaDTO novaMusica){
 
         Optional<Genero> genero = generoRepository.findBySearchTerm(novaMusica.getGeneroNome());
 
@@ -68,11 +67,5 @@ public class MusicaController {
     public List<Musica> listaMusica(){
         return musicaRepository.findAll();
     }
-//
-//    @PostMapping("/musica")
-//    public ResponseEntity criaMusica(@RequestBody CriaMusica musica){
-//        return musicaService.postMusica(musica);
-//
-//    }
 
 }

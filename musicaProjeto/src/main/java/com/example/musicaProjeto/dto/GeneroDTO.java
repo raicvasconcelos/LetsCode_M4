@@ -11,6 +11,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CriaGenero {
+public class GeneroDTO {
     private Genero genero;
 }

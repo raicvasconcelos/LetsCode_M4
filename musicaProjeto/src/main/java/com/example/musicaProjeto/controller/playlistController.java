@@ -1,6 +1,6 @@
 package com.example.musicaProjeto.controller;
 
-import com.example.musicaProjeto.dto.CriaPlaylist;
+import com.example.musicaProjeto.dto.PlaylistDTO;
 import com.example.musicaProjeto.entity.Musica;
 import com.example.musicaProjeto.entity.Pessoa;
 import com.example.musicaProjeto.entity.Playlist;
@@ -30,7 +30,7 @@ public class playlistController {
 
     @Operation(summary = "Cria uma playlist nova")
     @PostMapping
-    public ResponseEntity<?> criaPlaylist(@RequestBody CriaPlaylist playlist){
+    public ResponseEntity<?> criaPlaylist(@RequestBody PlaylistDTO playlist){
 
         Optional<Pessoa> pessoaFindID = pessoaRepository.findById(playlist.getPessoaID());
         Optional<Musica> musicaFindID = musicaRepository.findById(playlist.getMusicaID());
@@ -64,7 +64,7 @@ public class playlistController {
     }
     @Operation(summary = "Adiciona uma nova música à playlist")
     @PutMapping
-    public ResponseEntity adicionaMusicaPlaylist(@RequestBody CriaPlaylist addMusica){
+    public ResponseEntity adicionaMusicaPlaylist(@RequestBody PlaylistDTO addMusica){
         Optional<Pessoa> pessoaFindID = pessoaRepository.findById(addMusica.getPessoaID());
         Optional<Musica> musicaFindID = musicaRepository.findById(addMusica.getMusicaID());
         Optional<Playlist> playlistFind = playlistRepository.findByName(addMusica.getPlaylistNome());
@@ -104,7 +104,7 @@ public class playlistController {
     }
     @Operation(summary = "Remove uma musica de uma playlist")
     @DeleteMapping("/deletaMusicaPlaylist")
-    public ResponseEntity deleteMusicaPlaylist(@RequestBody CriaPlaylist deletaMusicaPlaylist) {
+    public ResponseEntity deleteMusicaPlaylist(@RequestBody PlaylistDTO deletaMusicaPlaylist) {
         Optional<Pessoa> pessoaFindID = pessoaRepository.findById(deletaMusicaPlaylist.getPessoaID());
         Optional<Musica> musicaFindID = musicaRepository.findById(deletaMusicaPlaylist.getMusicaID());
 
