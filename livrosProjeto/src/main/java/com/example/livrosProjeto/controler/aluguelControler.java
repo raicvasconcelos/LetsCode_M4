@@ -1,14 +1,11 @@
 package com.example.livrosProjeto.controler;
 
 import com.example.livrosProjeto.dto.AluguelDTO;
-import com.example.livrosProjeto.dto.AluguelRequest;
 import com.example.livrosProjeto.entity.Aluguel;
 import com.example.livrosProjeto.entity.Categoria;
 import com.example.livrosProjeto.entity.Livro;
 import com.example.livrosProjeto.entity.Pessoa;
-//import com.example.livrosProjeto.repository.LivroRepository;
-//import com.example.livrosProjeto.repository.PessoaRepository;
-import com.example.livrosProjeto.service.AluguelService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,34 +33,20 @@ public class aluguelControler {
     @Autowired
     private List<Aluguel> alugueis = Collections.synchronizedList(new ArrayList<>());
 
-//    @PostMapping
-//    public ResponseEntity criaAluguel(@RequestBody AluguelDTO novoAluguel) throws Exception {
-//
-////        Optional<Pessoa> pessoaEncontraNome =pessoas.stream().filter(pessoa -> pessoa.equals())
-//
-//        boolean pessoaExist = pessoas.contains(novoAluguel.getAluguel().getPessoa().getNome());
-//
-//        boolean livroExist = livros.contains(novoAluguel.getAluguel().getLivros());
-//        Categoria ficcao = categorias.stream().filter(categoria -> categoria.equals("Bibliografia")).findAny().orElse(null);
-//        Aluguel aluguel = new Aluguel();
-//        if(pessoaExist) {
-//            Pessoa pessoaEncontrada = pessoas.stream().filter(p ->{return p.equals(novoAluguel.getAluguel().getPessoa().getNome());}).findAny().orElseThrow(() -> new Exception("Pessoa não encontrada"));
-//            aluguel.setPessoa(new Pessoa());
-//            aluguel.setLivros(novoAluguel.getAluguel().getLivros());
-//            aluguel.setDataAluguel(LocalDate.now());
-//            aluguel.setDataEntrega(LocalDate.now().plusDays(3));
-//            return ResponseEntity.ok().body(aluguel);
-//       }else {return ResponseEntity.badRequest().body("Pessoa não econtrada");}
-//
-//    }
-
+    @Operation(summary = "Cria um novo aluguel")
     @PostMapping
     public ResponseEntity criaAluguel(@RequestBody AluguelDTO novoAluguel) throws Exception {
 
-        Optional<Pessoa> pessoaFind = pessoas.stream().filter(p -> p.getNome()
-                .equalsIgnoreCase(novoAluguel.getPessoaNome())).findFirst();
+        Pessoa pessoaEncontrada = pessoas.stream().filter(p -> p.getNome()
+                .equalsIgnoreCase(novoAluguel.getPessoaNome()))
+                .findFirst().orElseThrow(() -> new Exception("Pessoa não encontrada"));
 
-        Pessoa pessoaEncontrada = pessoaFind.orElseThrow(() -> new Exception("Pessoa não encontrada"));
+        boolean aluguelEncontrado = alugueis.stream().anyMatch(al -> al.getPessoa().
+                getNome().equalsIgnoreCase(novoAluguel.getPessoaNome()));
+
+        if(aluguelEncontrado){
+            return ResponseEntity.badRequest().body("Já existe um aluguel em aberto para essa pessoa");
+        }
 
         List<Livro> listalivrosEncontrados = new ArrayList<>();
 
@@ -93,11 +76,8 @@ public class aluguelControler {
          return ResponseEntity.badRequest().body("Um ou mais dos livros solicitados não foram encontrados na lista");
      }
 
-
-
-
     }
-
+    @Operation(summary = "Encontra aluguel registrado no nome da pessoa")
     @GetMapping("/{pessoaNome}")
     public ResponseEntity listaLivrosCategoria(@PathVariable String pessoaNome)throws Exception{
         Optional<Pessoa> pessoaFind = pessoas.stream().filter(p -> p.getNome()
@@ -114,12 +94,13 @@ public class aluguelControler {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
     }
-
+    @Operation(summary = "Retorna a lista de alugueis")
     @GetMapping
     public List<Aluguel> encontraAlugueis(){
         return alugueis;
     }
 
+    @Operation(summary = "Remove da lista o aluguel registrado no nome de uma pessoa")
     @DeleteMapping("/{pessoaNome}")
     public ResponseEntity deletaAluguel(@PathVariable String pessoaNome)throws Exception{
         Optional<Pessoa> pessoaFind = pessoas.stream().filter(p -> p.getNome()
@@ -135,7 +116,7 @@ public class aluguelControler {
                    findFirst().
                    orElseThrow(() -> new Exception("Aluguel não encontrado"));
 
-//            Aluguel aluguelEncontrado = aluguelFind.orElseThrow(() -> new Exception("Aluguel não encontrado"));
+
             alugueis.remove(aluguelFind);
 
             List<Aluguel> aluguelRestante = alugueis.stream().filter(aluguel -> aluguel.getPessoa().getNome()
@@ -147,10 +128,7 @@ public class aluguelControler {
         }
     }
 
-//    @PostMapping
-//    public void criaAluguel(@RequestBody String novoAluguel){
-//        System.out.println(novoAluguel);
-//    }
+
 
 
 

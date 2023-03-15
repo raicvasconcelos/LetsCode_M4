@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Data
@@ -15,9 +16,9 @@ import java.util.List;
 @ToString
 public class AluguelDTO {
 
-//    private Aluguel aluguel;
+    @NotBlank(message="O nome é obrigatório.")
     private String pessoaNome;
-//    private String livroTitulo;
+
     private List<Livro> livroList;
 }
 

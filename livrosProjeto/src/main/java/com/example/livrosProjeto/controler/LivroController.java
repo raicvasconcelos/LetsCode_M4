@@ -5,6 +5,7 @@ import com.example.livrosProjeto.dto.LivroDTO;
 import com.example.livrosProjeto.entity.Categoria;
 import com.example.livrosProjeto.entity.Livro;
 import com.example.livrosProjeto.entity.Pessoa;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,7 @@ public class LivroController {
     @Autowired
     private List<Pessoa> pessoas = Collections.synchronizedList(new ArrayList<>());
 
+    @Operation(summary = "Adiciona um novo livro a lista")
     @PostMapping
     public ResponseEntity criaLivro(@RequestBody LivroDTO novolivro) throws Exception {
 
@@ -51,7 +53,7 @@ public class LivroController {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
     }
-
+    @Operation(summary = "Retorna todos os livros de uma mesma categoria")
     @GetMapping("/{categoriaNome}")
     public ResponseEntity listaLivrosCategoria(@PathVariable String categoriaNome)throws Exception{
 
@@ -71,11 +73,11 @@ public class LivroController {
 
     }
 
-
-
-
+    @Operation(summary = "Retorna toda a lista de livros")
     @GetMapping
     public List<Livro> listaLivros(){
         return livros;
     }
+
+
 }

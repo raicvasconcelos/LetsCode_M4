@@ -24,6 +24,5 @@ public class Aluguel {
     private LocalDate dataAluguel;
     private LocalDate dataEntrega;
 
-    //    @OneToMany(targetEntity = Livro.class, cascade = CascadeType.ALL)
-//    @JoinColumn(name="pessoa_fk", referencedColumnName = "id")
+
 }
