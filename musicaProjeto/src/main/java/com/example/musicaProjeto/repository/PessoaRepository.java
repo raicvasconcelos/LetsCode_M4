@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 public interface PessoaRepository extends JpaRepository<Pessoa, Integer> {
-    @Query("SELECT CASE WHEN COUNT(p) > 0 THEN true ELSE false END FROM Pessoa p WHERE p.nome = ?1")
+    @Query("SELECT CASE WHEN COUNT(p) > 0 THEN true ELSE false END FROM Pessoa p WHERE LOWER(p.nome) = ?1")
     boolean existsByName(String nome);
 
     @Query("SELECT CASE WHEN COUNT(p) > 0 THEN true ELSE false END FROM Pessoa p WHERE p.cpf = ?1")
@@ -21,8 +21,5 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Integer> {
     @Query("SELECT p FROM Pessoa p WHERE LOWER(p.nome) = LOWER(:searchTerm)")
     Pessoa  findByName(@Param("searchTerm") String pessoaNome);
 
-//    @Modifying
-//    @Transactional
-//    @Query("UPDATE Pessoa p SET p.like = CONCAT(p.like, ?2) WHERE p.id = ?1")
-//    void addMusicToPerson(Integer pessoaID, Musica musica);
+
 }

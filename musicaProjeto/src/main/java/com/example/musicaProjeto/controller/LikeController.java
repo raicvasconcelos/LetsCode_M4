@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 @AllArgsConstructor
 @RestController
@@ -50,11 +51,20 @@ public class LikeController {
             Musica musicaEncontrada = musicaFindID.orElseThrow(() -> new Exception("Musica não encontrada"));
             Pessoa pessoaEncontrada = pessoaFindID.orElseThrow(() -> new Exception("Pessoa não encontrada"));
             pessoaEncontrada.getLike().remove(musicaEncontrada);
-                        pessoaRepository.save(pessoaEncontrada);
+            pessoaRepository.save(pessoaEncontrada);
              return ResponseEntity.ok(pessoaRepository.findById(pessoaID));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error: " + e.getMessage());
         }
+
+    }
+    @Operation(summary = "Retorna as musicas favoritadas pela pessoa")
+    @GetMapping("/{pessoaID}")
+    public ResponseEntity encontraLikePessoa(@PathVariable Integer pessoaID) throws Exception {
+        Pessoa pessoaFindID = pessoaRepository.findById(pessoaID)
+                .orElseThrow(() -> new Exception("Pessoa não encontrada"));
+
+        return ResponseEntity.ok(pessoaFindID.getLike());
 
     }
 }

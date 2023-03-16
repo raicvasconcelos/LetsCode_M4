@@ -11,9 +11,9 @@ import java.util.Optional;
 
 public interface PlaylistRepository extends JpaRepository<Playlist, Integer> {
 
-    @Query("SELECT pl FROM Playlist pl WHERE pl.playlistNome = :searchTerm")
+    @Query("SELECT pl FROM Playlist pl WHERE LOWER(pl.playlistNome) = LOWER(:searchTerm)")
     Optional<Playlist> findByName(@Param("searchTerm") String playlistNome);
 
-    @Query("SELECT pl FROM Playlist pl WHERE pl.pessoa.nome = :pessoaNome")
+    @Query("SELECT pl FROM Playlist pl WHERE LOWER(pl.pessoa.nome) = LOWER(:pessoaNome)")
     List<Playlist> findAllByPessoaNome(@Param("pessoaNome") String pessoaNome);
 }

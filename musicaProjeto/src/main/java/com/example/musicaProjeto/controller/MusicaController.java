@@ -5,7 +5,6 @@ import com.example.musicaProjeto.entity.Genero;
 import com.example.musicaProjeto.entity.Musica;
 import com.example.musicaProjeto.repository.GeneroRepository;
 import com.example.musicaProjeto.repository.MusicaRepository;
-import com.example.musicaProjeto.service.MusicaService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ import java.util.Optional;
 @RequestMapping("/musica")
 public class MusicaController {
 
-    MusicaService musicaService = new MusicaService();
     @Autowired
     private MusicaRepository musicaRepository;
 
@@ -62,7 +60,7 @@ public class MusicaController {
         }
     }
 
-
+    @Operation(summary = "Lista todos as músicas.")
     @GetMapping
     public List<Musica> listaMusica(){
         return musicaRepository.findAll();

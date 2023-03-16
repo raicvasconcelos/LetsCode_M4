@@ -19,9 +19,9 @@ public class Playlist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String playlistNome;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Pessoa pessoa;
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany
     private List<Musica> musicas;
 
 

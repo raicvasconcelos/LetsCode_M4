@@ -3,10 +3,11 @@ package com.example.musicaProjeto.config;
 import com.example.musicaProjeto.entity.Genero;
 import com.example.musicaProjeto.entity.Musica;
 import com.example.musicaProjeto.entity.Pessoa;
+import com.example.musicaProjeto.entity.Playlist;
 import com.example.musicaProjeto.repository.GeneroRepository;
 import com.example.musicaProjeto.repository.MusicaRepository;
 import com.example.musicaProjeto.repository.PessoaRepository;
-import com.example.musicaProjeto.service.MusicaService;
+import com.example.musicaProjeto.repository.PlaylistRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 
 @Configuration
 @AllArgsConstructor
-public class ADBConfig1 {
+public class DBConfig {
 
     private PessoaRepository pessoaRepository;
 
@@ -23,7 +24,9 @@ public class ADBConfig1 {
 
     private MusicaRepository musicaRepository;
 
-    private MusicaService musicaService;
+    private PlaylistRepository playlistRepository;
+
+
 
 
     @PostConstruct
@@ -72,9 +75,26 @@ public class ADBConfig1 {
 
         Pessoa anthony = pessoaRepository.findByName("Anthony Fantano");
         Musica parabol = musicaRepository.findByName("Parabola");
+        Musica silverSoul = musicaRepository.findByName("Silver Soul");
         anthony.setLike(new ArrayList<>());
         anthony.getLike().add(parabol);
+        anthony.getLike().add(silverSoul);
         pessoaRepository.saveAndFlush(anthony);
+
+        Playlist playlist1 = new Playlist();
+        playlist1.setPlaylistNome("playlist1");
+        playlist1.setPessoa(anthony);
+        playlist1.setMusicas(new ArrayList<>());
+        playlist1.getMusicas().add(parabol);
+        playlist1.getMusicas().add(silverSoul);
+        Musica naZare = musicaRepository.findByName("Na Zare");
+        playlist1.getMusicas().add(naZare);
+        playlistRepository.saveAndFlush(playlist1);
+
+
+
+
+
 
 
 

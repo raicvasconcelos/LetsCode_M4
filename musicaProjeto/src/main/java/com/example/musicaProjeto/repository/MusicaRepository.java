@@ -13,8 +13,7 @@ public interface MusicaRepository extends JpaRepository<Musica, Integer> {
     boolean existsByName(String musicaNome);
 
 
-
-    @Query("SELECT m FROM Musica m WHERE m.genero.generoNome = :generoNome")
+    @Query("SELECT m FROM Musica m WHERE LOWER(m.genero.generoNome) = LOWER(:generoNome)")
     List<Musica> findAllByGeneroNome(@Param("generoNome") String generoNome);
 
     @Query("SELECT m FROM Musica m WHERE LOWER(m.musicaNome) = LOWER(:searchTerm)")
