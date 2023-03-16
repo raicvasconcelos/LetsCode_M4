@@ -12,12 +12,12 @@ import javax.persistence.Table;
 @Table(name="musica")
 public class Musica extends PanacheEntity {
 
-    private String musicaNome;
-    private String artista;
+    public String musicaNome;
+    public String artista;
 
     @ManyToOne
-    private Genero genero;
+    public Genero genero;
 
     @ManyToOne
-    private Pessoa like;
+    public Pessoa like;
 }
