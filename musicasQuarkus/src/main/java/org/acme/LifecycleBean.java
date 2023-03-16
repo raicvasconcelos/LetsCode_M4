@@ -1,10 +1,12 @@
-package org.acme.playlist;
+package org.acme;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import org.acme.genero.Genero;
 import org.acme.genero.GeneroRepository;
 import org.acme.genero.GeneroService;
+import org.acme.musica.Musica;
+import org.acme.musica.MusicaService;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -20,6 +22,9 @@ public class LifecycleBean {
     @Inject
     public GeneroService generoService;
 
+    @Inject
+    public MusicaService musicaService;
+
     private static final Logger LOGGER = Logger.getLogger("MyLifecycleBean");
 
     public void onStart(@Observes StartupEvent ev){
@@ -32,6 +37,12 @@ public class LifecycleBean {
         Genero genero3 = new Genero();
         genero3.setGeneroNome("Post-Punk Sovietico");
         generoService.create(genero3);
+
+        Musica musica1 = new Musica();
+        musica1.musicaNome="SilverSoul";
+        musica1.artista="Beach House";
+        musica1.genero=genero1;
+        musicaService.create(musica1);
     }
 
     public void onStop(@Observes ShutdownEvent ev) {

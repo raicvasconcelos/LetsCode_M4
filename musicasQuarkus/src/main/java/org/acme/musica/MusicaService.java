@@ -2,6 +2,7 @@ package org.acme.musica;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,4 +17,10 @@ public class MusicaService {
     }
 
     public Musica findByName(String musicaNome) { return musicaRepository.findByName(musicaNome);  }
+
+    @Transactional
+    public Musica create(Musica musica) {
+        musica.persistAndFlush();
+        return musica;
+    }
 }
