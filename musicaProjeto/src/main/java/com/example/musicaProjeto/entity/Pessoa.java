@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,8 +20,8 @@ public class Pessoa {
     private int id;
     private String nome;
     private String cpf;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Musica> like;
+    @OneToMany
+    private List<Musica> like ;
 
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<Playlist> playlists;

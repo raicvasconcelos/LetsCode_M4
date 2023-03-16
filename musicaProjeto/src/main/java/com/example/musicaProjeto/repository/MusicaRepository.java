@@ -1,6 +1,7 @@
 package com.example.musicaProjeto.repository;
 
 import com.example.musicaProjeto.entity.Musica;
+import com.example.musicaProjeto.entity.Pessoa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,7 +17,8 @@ public interface MusicaRepository extends JpaRepository<Musica, Integer> {
     @Query("SELECT m FROM Musica m WHERE m.genero.generoNome = :generoNome")
     List<Musica> findAllByGeneroNome(@Param("generoNome") String generoNome);
 
-
+    @Query("SELECT m FROM Musica m WHERE LOWER(m.musicaNome) = LOWER(:searchTerm)")
+    Musica findByName(@Param("searchTerm") String musicaNome);
 }
 
 

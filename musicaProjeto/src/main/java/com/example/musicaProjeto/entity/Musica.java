@@ -19,12 +19,12 @@ public class Musica {
     private int id;
     private String musicaNome;
     private String artista;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Genero genero;
 //    @JoinColumn(name = "genero_id", referencedColumnName = "id")
 //    @OneToOne(cascade = CascadeType.PERSIST)
 //    private Like like;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Pessoa like;
 
 

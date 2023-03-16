@@ -27,11 +27,10 @@ public class DBConfig2 {
         Musica musica1 = new Musica();
         musica1.setMusicaNome("Silver Soul");
         musica1.setArtista("Beach House");
-        Genero genero = generoRepository.findGenero("Dream Pop");
-//        musica1.setGenero(genero);
-//        musicaRepository.saveAndFlush(musica1);
-        System.out.println(musica1.toString());
-//        System.out.println(genero.toString());
+        Genero dreamPop = generoRepository.findGenero("Dream Pop");
+        musica1.setGenero(dreamPop );
+        musicaRepository.saveAndFlush(musica1);
+        musicaRepository.flush();
 
     }
 }

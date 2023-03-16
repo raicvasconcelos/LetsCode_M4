@@ -20,7 +20,7 @@ public class Genero {
     private int id;
     private String generoNome;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany
     private List<Musica> musicas;
 
 }
